@@ -22,21 +22,20 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        // Remove try-catch, let exceptions propagate to GlobalExceptionHandler
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+        UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        Authentication authentication = authenticationManager.authenticate(authToken);
         User user = (User) authentication.getPrincipal();
         String token = authUtil.generateAccessToken(user);
-
         return new LoginResponseDto(token, user.getId());
     }
 
-    public RegisterResponseDto register(RegisterRequestDto registerRequestDto) throws IllegalAccessException {
-        User user = userRepository.findByUsername(registerRequestDto.getUsername()).orElse(null);
-        if(user != null) throw new IllegalAccessException("User Already Exists");
+    public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
+        if (userRepository.findByUsername(registerRequestDto.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("User already exists");
+        }
 
-        user = userRepository.save(
+        User user = userRepository.save(
                 User.builder()
                         .username(registerRequestDto.getUsername())
                         .password(passwordEncoder.encode(registerRequestDto.getPassword()))

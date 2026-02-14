@@ -25,27 +25,32 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-       try {
-           log.info("incoming request: {}", request.getRequestURI());
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
-           final String requestTokenHeader = request.getHeader("Authorization");
-           if(requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer")){
-               filterChain.doFilter(request, response);
-               return;
-           }
+        String authHeader = request.getHeader("Authorization");
 
-           String token = requestTokenHeader.split("Bearer ")[1];
-           String username = authUtil.getUsernameFromToken(token);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-           if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-               User user = userRepository.findByUsername(username).orElseThrow();
-               UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-               SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-           }
-           filterChain.doFilter(request, response);
-       } catch (Exception ex) {
-           handlerExceptionResolver.resolveException(request, response, null, ex);
-       }
+        try {
+            String token = authHeader.substring(7); // Remove "Bearer " prefix
+            String username = authUtil.getUsernameFromToken(token);
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                User user = userRepository.findByUsername(username)
+                        .orElseThrow(() -> new RuntimeException("User not found: " + username));
+
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+
+            filterChain.doFilter(request, response);
+        } catch (Exception ex) {
+            handlerExceptionResolver.resolveException(request, response, null, ex);
+        }
     }
 }
