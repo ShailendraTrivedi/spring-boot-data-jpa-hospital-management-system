@@ -1,4 +1,4 @@
-package com.codingshuttle.youtube.hospitalManagement.dto;
+package com.codingshuttle.youtube.hospitalManagement.dto.reponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

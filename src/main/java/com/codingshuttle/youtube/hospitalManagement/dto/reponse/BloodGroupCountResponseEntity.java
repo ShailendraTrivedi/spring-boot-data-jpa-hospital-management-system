@@ -1,4 +1,4 @@
-package com.codingshuttle.youtube.hospitalManagement.dto;
+package com.codingshuttle.youtube.hospitalManagement.dto.reponse;
 
 import com.codingshuttle.youtube.hospitalManagement.entity.type.BloodGroupType;
 import lombok.AllArgsConstructor;

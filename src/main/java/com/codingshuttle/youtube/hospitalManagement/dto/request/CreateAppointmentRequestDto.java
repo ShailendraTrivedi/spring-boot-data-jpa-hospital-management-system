@@ -1,4 +1,4 @@
-package com.codingshuttle.youtube.hospitalManagement.dto;
+package com.codingshuttle.youtube.hospitalManagement.dto.request;
 
 import lombok.Data;
 

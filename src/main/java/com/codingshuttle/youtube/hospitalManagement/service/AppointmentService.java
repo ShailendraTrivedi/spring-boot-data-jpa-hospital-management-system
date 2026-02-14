@@ -1,7 +1,7 @@
 package com.codingshuttle.youtube.hospitalManagement.service;
 
-import com.codingshuttle.youtube.hospitalManagement.dto.AppointmentResponseDto;
-import com.codingshuttle.youtube.hospitalManagement.dto.CreateAppointmentRequestDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.request.CreateAppointmentRequestDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.reponse.LoginResponseDto;
 import com.codingshuttle.youtube.hospitalManagement.entity.Appointment;
 import com.codingshuttle.youtube.hospitalManagement.entity.Doctor;
 import com.codingshuttle.youtube.hospitalManagement.entity.Patient;
@@ -27,7 +27,7 @@ public class AppointmentService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public AppointmentResponseDto createNewAppointment(CreateAppointmentRequestDto createAppointmentRequestDto) {
+    public LoginResponseDto.AppointmentResponseDto createNewAppointment(CreateAppointmentRequestDto createAppointmentRequestDto) {
         Long doctorId = createAppointmentRequestDto.getDoctorId();
         Long patientId = createAppointmentRequestDto.getPatientId();
 
@@ -45,7 +45,7 @@ public class AppointmentService {
         patient.getAppointments().add(appointment); // to maintain consistency
 
         appointment = appointmentRepository.save(appointment);
-        return modelMapper.map(appointment, AppointmentResponseDto.class);
+        return modelMapper.map(appointment, LoginResponseDto.AppointmentResponseDto.class);
     }
 
     @Transactional
@@ -60,12 +60,12 @@ public class AppointmentService {
         return appointment;
     }
 
-    public List<AppointmentResponseDto> getAllAppointmentsOfDoctor(Long doctorId) {
+    public List<LoginResponseDto.AppointmentResponseDto> getAllAppointmentsOfDoctor(Long doctorId) {
         Doctor doctor = doctorRepository.findById(doctorId).orElseThrow();
 
         return doctor.getAppointments()
                 .stream()
-                .map(appointment -> modelMapper.map(appointment, AppointmentResponseDto.class))
+                .map(appointment -> modelMapper.map(appointment, LoginResponseDto.AppointmentResponseDto.class))
                 .collect(Collectors.toList());
     }
 }

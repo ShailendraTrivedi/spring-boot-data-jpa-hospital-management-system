@@ -1,6 +1,6 @@
 package com.codingshuttle.youtube.hospitalManagement.controller;
 
-import com.codingshuttle.youtube.hospitalManagement.dto.PatientResponseDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.reponse.PatientResponseDto;
 import com.codingshuttle.youtube.hospitalManagement.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

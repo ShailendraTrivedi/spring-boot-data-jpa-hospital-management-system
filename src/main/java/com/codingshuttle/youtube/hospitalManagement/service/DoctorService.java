@@ -1,6 +1,6 @@
 package com.codingshuttle.youtube.hospitalManagement.service;
 
-import com.codingshuttle.youtube.hospitalManagement.dto.DoctorResponseDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.reponse.DoctorResponseDto;
 import com.codingshuttle.youtube.hospitalManagement.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

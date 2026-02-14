@@ -1,8 +1,8 @@
 package com.codingshuttle.youtube.hospitalManagement.controller;
 
-import com.codingshuttle.youtube.hospitalManagement.dto.AppointmentResponseDto;
-import com.codingshuttle.youtube.hospitalManagement.dto.CreateAppointmentRequestDto;
-import com.codingshuttle.youtube.hospitalManagement.dto.PatientResponseDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.request.CreateAppointmentRequestDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.reponse.PatientResponseDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.reponse.LoginResponseDto;
 import com.codingshuttle.youtube.hospitalManagement.service.AppointmentService;
 import com.codingshuttle.youtube.hospitalManagement.service.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class PatientController {
     private final AppointmentService appointmentService;
 
     @PostMapping("/appointments")
-    public ResponseEntity<AppointmentResponseDto> createNewAppointment(@RequestBody CreateAppointmentRequestDto createAppointmentRequestDto) {
+    public ResponseEntity<LoginResponseDto.AppointmentResponseDto> createNewAppointment(@RequestBody CreateAppointmentRequestDto createAppointmentRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.createNewAppointment(createAppointmentRequestDto));
     }
 

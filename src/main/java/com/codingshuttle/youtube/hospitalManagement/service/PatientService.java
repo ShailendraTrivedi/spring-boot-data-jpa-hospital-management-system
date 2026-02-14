@@ -1,6 +1,6 @@
 package com.codingshuttle.youtube.hospitalManagement.service;
 
-import com.codingshuttle.youtube.hospitalManagement.dto.PatientResponseDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.reponse.PatientResponseDto;
 import com.codingshuttle.youtube.hospitalManagement.entity.Patient;
 import com.codingshuttle.youtube.hospitalManagement.repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;

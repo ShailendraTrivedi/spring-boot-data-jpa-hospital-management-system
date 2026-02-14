@@ -37,7 +37,7 @@ public class AuthService {
 
         User user = userRepository.save(
                 User.builder()
-                        .username(registerRequestDto.getUsername())
+                        .username(registerRequestDto.getUsername().trim().toLowerCase())
                         .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                         .build()
         );

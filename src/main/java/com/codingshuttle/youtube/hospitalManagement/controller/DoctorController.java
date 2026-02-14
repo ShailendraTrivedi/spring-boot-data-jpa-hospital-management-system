@@ -1,6 +1,6 @@
 package com.codingshuttle.youtube.hospitalManagement.controller;
 
-import com.codingshuttle.youtube.hospitalManagement.dto.AppointmentResponseDto;
+import com.codingshuttle.youtube.hospitalManagement.dto.reponse.LoginResponseDto;
 import com.codingshuttle.youtube.hospitalManagement.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class DoctorController {
     private final AppointmentService appointmentService;
 
     @GetMapping("/appointments")
-    public ResponseEntity<List<AppointmentResponseDto>> getAllAppointmentsOfDoctor() {
+    public ResponseEntity<List<LoginResponseDto.AppointmentResponseDto>> getAllAppointmentsOfDoctor() {
         return ResponseEntity.ok(appointmentService.getAllAppointmentsOfDoctor(1L));
     }
 
